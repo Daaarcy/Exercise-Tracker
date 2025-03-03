@@ -15,13 +15,19 @@ let users = [];
 app.post("/api/users", function(req, res){
   let userName = req.body.username;
 
-  users.push({ username: userName, _id: users.length + 1 });
-  res.json({ username: userName, _id: users.length});
+  const newUser = { 
+    username: userName, 
+    _id: users.length + 1,
+    logs: [] };
+
+    users.push(newUser);
+
+  res.json({ username: userName, _id: newUser._id });
 })
 
 // a list of all users
-app.get("/api/users/:_id/logs", function(req, res){
-  res.send(users)
+app.get("/api/users", function(req, res){
+  res.json(users);
 })
 
 // form description, duration, and optionally date data
