@@ -32,26 +32,35 @@ app.get("/api/users", function(req, res){
 
 // form description, duration, and optionally date data
 app.post("/api/users/:_id/exercises", function(req, res){
-  let description = req.body.description;
-  let duration = req.body.duration;
-  let date = req.body.date || new Date();
-  let formattedDate = date.toDateString();
+  const userId = parseInt(req.params._id);
+  const user = user.find(u => u._id === userId);
 
-  users.push({ 
-    username: req.body.username,
-    description: description,
-    duration: duration,
-    date: date,
-     _id: req.params._id });
+  if (user) {
+    const description = req.body.description;
+    const duration = req.body.duration;
+    const date = req.body.date ? new Date(req.body.date) : new Date();
+    const formattedDate = date.toDateString();
 
-  res.json({ 
-    username: req.body.username,
-    description: description,
-    duration: duration,
-    date: formattedDate,
-     _id: req.params._id });
+    const newExcercise = {
+      description: description,
+      duration: duration,
+      date: date
+    };
 
-})
+    user.log.push(newExcercise);
+
+    res.json({ 
+      username: user.username,
+      description: description,
+      duration: duration,
+      date: formattedDate,
+       _id: user._id });
+
+  } else {
+    res.status(404).json({ error: "User not found" });
+  }
+});
+
 //
 
 
