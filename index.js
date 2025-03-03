@@ -22,12 +22,18 @@ app.post("/api/users", function(req, res){
 
     users.push(newUser);
 
-  res.json({ username: userName, _id: newUser._id });
+  res.json({ 
+    username: userName, 
+    _id: newUser._id 
+  });
 })
 
 // a list of all users
 app.get("/api/users", function(req, res){
-  res.json(users);
+  res.json(usersmap(user => ({
+    username: user.username,
+    _id: user._id
+  })));
 })
 
 // form description, duration, and optionally date data
@@ -61,7 +67,24 @@ app.post("/api/users/:_id/exercises", function(req, res){
   }
 });
 
-//
+// retrieve a full exercise log of any user
+
+app.get("/api/users/:_id/logs", function(req, res){
+const userId = parseInt(req.params._id);
+const user = users.find(u => u._id === userId);
+
+if (user){
+  res.json({
+    username: user.username,
+    count: user.log.length,
+    _id: user._id,
+    log: user.log
+  });
+} else {
+  res.status(404).json({ error: "User not found" });
+}
+});
+
 
 
 
