@@ -29,19 +29,20 @@ app.post("/api/users/:_id/exercises", function(req, res){
   let description = req.body.description;
   let duration = req.body.duration;
   let date = req.body.date || new Date();
+  let formattedDate = date.toDateString();
 
   users.push({ 
     username: req.body.username,
     description: description,
     duration: duration,
-    date, date,
+    date: date,
      _id: req.params._id });
 
   res.json({ 
     username: req.body.username,
     description: description,
     duration: duration,
-    date, date.toDateString(),
+    date: formattedDate,
      _id: req.params._id });
 
 })
