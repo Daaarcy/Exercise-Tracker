@@ -13,10 +13,10 @@ let users = [];
 
 // create new user
 app.post("/api/users", function(req, res){
-  let userName = req.username;
+  let userName = req.body.username;
 
-  users.push({ username: userName, _id: users.lenght + 1 });
-  res.json({ username: userName, _id: users.lenght + 1 });
+  users.push({ username: userName, _id: users.length + 1 });
+  res.json({ username: userName, _id: users.length + 1 });
 })
 
 // a list of all users
@@ -26,14 +26,9 @@ app.get("/api/users/:_id/logs", function(req, res){
 
 // form description, duration, and optionally date data
 app.post("/api/users/:_id/exercises", function(req, res){
-  let description = req.description;
-  let duration = req.duration;
-  let date = req.date;
-
-  // If no date is supplied, the current date will be used.
-  if(!date){
-    date = new Date();
-  };
+  let description = req.body.description;
+  let duration = req.body.duration;
+  let date = req.body.date || new Date();
 
   users.push({ 
     username: userName,
