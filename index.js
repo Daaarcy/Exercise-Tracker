@@ -5,6 +5,7 @@ require('dotenv').config()
 
 app.use(cors())
 app.use(express.static('public'))
+app.use(express.json());
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 });
@@ -30,7 +31,7 @@ app.post("/api/users", function(req, res){
 
 // a list of all users
 app.get("/api/users", function(req, res){
-  res.json(usersmap(user => ({
+  res.json(users.map(user => ({
     username: user.username,
     _id: user._id
   })));
@@ -39,7 +40,7 @@ app.get("/api/users", function(req, res){
 // form description, duration, and optionally date data
 app.post("/api/users/:_id/exercises", function(req, res){
   const userId = parseInt(req.params._id);
-  const user = user.find(u => u._id === userId);
+  const user = users.find(u => u._id === userId);
 
   if (user) {
     const description = req.body.description;
