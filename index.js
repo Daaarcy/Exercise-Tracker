@@ -16,7 +16,7 @@ app.post("/api/users", function(req, res){
   let userName = req.body.username;
 
   users.push({ username: userName, _id: users.length + 1 });
-  res.json({ username: userName, _id: users.length + 1 });
+  res.json({ username: userName, _id: users.length});
 })
 
 // a list of all users
@@ -31,18 +31,18 @@ app.post("/api/users/:_id/exercises", function(req, res){
   let date = req.body.date || new Date();
 
   users.push({ 
-    username: userName,
-    description: description,
-    duration: duration,
-    date, date.toDateString(),
-     _id: users.lenght + 1 });
-
-  res.json({ 
-    username: userName,
+    username: req.body.username,
     description: description,
     duration: duration,
     date, date,
-     _id: users.lenght + 1 });
+     _id: req.params._id });
+
+  res.json({ 
+    username: req.body.username,
+    description: description,
+    duration: duration,
+    date, date.toDateString(),
+     _id: req.params._id });
 
 })
 //
