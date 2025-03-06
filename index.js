@@ -15,10 +15,11 @@ let users = [];
 // create new user
 app.post("/api/users", function(req, res){
   let userName = req.body.username;
+  const crypto = require('crypto');
 
   const newUser = { 
     username: userName, 
-    _id: users.length + 1,
+    _id: crypto.randomUUID(),
     logs: [] };
 
     users.push(newUser);
