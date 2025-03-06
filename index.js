@@ -20,7 +20,7 @@ app.post("/api/users", function(req, res){
   const newUser = { 
     username: userName, 
     _id: crypto.randomUUID(),
-    logs: [] };
+    log: [] };
 
     users.push(newUser);
 
@@ -45,7 +45,7 @@ app.post("/api/users/:_id/exercises", function(req, res){
 
   if (user) {
     const description = req.body.description;
-    const duration = req.body.duration;
+    const duration = Number(req.body.duration);
     const date = req.body.date ? new Date(req.body.date) : new Date();
     const formattedDate = date.toDateString();
 
